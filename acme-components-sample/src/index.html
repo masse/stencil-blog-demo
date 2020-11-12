@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+<title>Stencil Component Starter</title>
+
+<style>
+  body {
+    background-color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+  }
+
+   .global-red {
+     color: red;
+   }
+</style>
+
+
+
+<script type="module" src="/build/acme-components-sample.esm.js"></script>
+<script nomodule src="/build/acme-components-sample.js"></script>
+</head>
+<body>
+
+    <acme-product-card pid="13111" badge="JUST IN!" name="Snazzy handbag"
+                       desc="Featuring a brand new design, this is our most selling item just now. Get one before it's to late!"
+                       image-src="/bag-2.png" price="140.95"></acme-product-card>
+
+
+  <acme-accordion header-text="Where can I get help with X?">
+    If you have problems with device X, please contact...
+  </acme-accordion>
+
+    <acme-accordion id="acme-accordion1" header-text="Accordion title text">
+      This content is placed in a <code>&lt;slot&gt;</code> within the shadow DOM of a web component.
+      Such content actually lives in the <b>light DOM</b> and is therefore fully stylable etc as any element in the DOM.
+      <br />
+      For example the globally defined class <span class="global-red">global-red</span> affects the slotted elements.
+    </acme-accordion>
+
+
+  <!-- Just to test changing the header-text attribute from outside the component -->
+  <input type="text" size="80" placeholder="Type to change header text"
+         oninput="document.querySelector('#acme-accordion1').setAttribute('header-text', this.value)">
+  <script>
+    //Test native event handling
+   document.querySelector('acme-product-card').addEventListener('addToCart', event => console.log(event));
+  </script>
+</body>
+</html>

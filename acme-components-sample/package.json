@@ -1,0 +1,41 @@
+{
+  "name": "acme-components-sample",
+  "version": "0.0.2",
+  "description": "Acme Component sample library using stencil.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/custom-elements/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/custom-elements/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/acme-components-sample/acme-components-sample.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
+  },
+  "dependencies": {
+    "@stencil/core": "2.3.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@stencil/sass": "^1.3.2",
+    "@types/jest": "^26.0.12",
+    "@types/puppeteer": "^3.0.1",
+    "jest": "^26.4.2",
+    "jest-cli": "^26.4.2",
+    "puppeteer": "^5.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masse/stencil-demo.git"
+  },
+  "homepage": "https://github.com/masse/stencil-demo"
+}

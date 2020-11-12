@@ -1,0 +1,31 @@
+<style>
+  .content {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    text-align: center;
+  }
+
+  .product-list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  ul {
+    list-style: none;
+  }
+
+</style>
+<div class="content">
+  <h1>Using &lt;acme-product-card&gt; web component in Angular (10.2)</h1>
+
+  <div class="product-list">
+    <acme-product-card *ngFor="let product of products" [attr.pid]="product.pid" [attr.badge]="product.badge" [attr.name]="product.name"
+                       [attr.desc]="product.desc" [attr.image-src]="product.imageSrc" [attr.price]="product.price"
+                       (addToCart)="onAddToCart($event)"></acme-product-card>
+  </div>
+  <ul id="events">Angular parent component events:
+    <li *ngFor="let event of events">
+      &#x2192; {{ event }}
+    </li>
+  </ul>
+
+</div>

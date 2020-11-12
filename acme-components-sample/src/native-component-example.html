@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+<title>Native Component Example</title>
+
+<style>
+  .global-red {
+    color: red;
+  }
+</style>
+
+<template id="card-accordion-template">
+  <style>
+    :host {
+      display: block;
+      font-family: Sans-Serif;
+    }
+
+    header {
+      position: relative;
+      cursor: pointer;
+      padding: 10px;
+      background: #3393d4;
+      color: #fff;
+      border-bottom: 2px solid #f2f2f2;
+    }
+
+    header:after {
+      position: absolute;
+      content: "\25b6";
+      right: 10px;
+      transition: transform 0.5s;
+    }
+
+    header.open:after {
+      transform: rotate(90deg);
+    }
+
+    header.open + section {
+      max-height: 600px;
+      padding: 10px;
+    }
+
+    section {
+      overflow: hidden;
+      max-height: 0;
+      height: auto;
+      background: #eee;
+      color: #333;
+    }
+  </style>
+
+  <host>
+    <header></header>
+    <section>
+      <slot></slot>
+    </section>
+    <!--<span class="global-red">global-red</span>-->
+  </host>
+
+</template>
+
+<script>
+
+      class CardAccordion extends HTMLElement {
+        "use strict";
+
+        //Define which html attributes to get attributeChangedCallback's for
+        static get observedAttributes() {
+          return ['header-text'];
+        }
+
+        constructor() {
+          super();
+
+          //State of accordion
+          this._open = false;
+
+          // Create a shadow root
+          this._shadow = this.attachShadow({mode: 'open'});
+
+          // Get the template we want to use
+          const template = document.querySelector('#card-accordion-template');
+
+          // Attach a clone of the template to the shadow DOM root
+          this._shadow.appendChild(template.content.cloneNode(true));
+
+          //Keep a reference to the header element
+          this._header = this._shadow.querySelector("header");
+
+          //Bind eventhandler to this instance
+          this.toggleOpen = this.toggleOpen.bind(this);
+        }
+
+        toggleOpen() {
+          this._open = !this._open;
+          this._open ? this._header.classList.add("open") : this._header.classList.remove("open");
+        }
+
+        /**
+         * WebComponent lifecycle methods
+         */
+        //Invoked each time the custom element is appended into a document-connected element
+        connectedCallback() {
+          this._header.addEventListener("click", this.toggleOpen);
+        }
+
+        //Invoked when the custom element is disconnected from the document's DOM.
+        disconnectedCallback() {
+          this._header.removeEventListener("click", this.toggleOpen);
+        }
+
+        // Invoked when one of the custom element's attributes is added, removed, or changed.
+        // observedAttributes defines which attributes we will get the callback for.
+        attributeChangedCallback(name, oldVal, newVal) {
+          if (oldVal === newVal) {
+            return;
+          }
+
+          //Actually not needed when we only have 1 attribute in this case...
+          if (name === 'header-text') {
+            this._header.innerHTML = newVal;
+          }
+        }
+      }
+      customElements.define('acme-accordion', CardAccordion);
+</script>
+</head>
+<body class="global-red">
+
+  <acme-accordion header-text="Accordion title text">
+    This content is placed in a <code>&lt;slot&gt;</code> within the shadow DOM of a web component.
+    Such content actually lives in the <b>light DOM</b> and is therefore fully stylable etc as any element in the DOM.
+    <br />
+    For example the globally defined class <span class="global-red">global-red</span> affects the slotted elements.
+  </acme-accordion>
+
+
+  <!-- Just to test changing the header-text attribute from outside the component -->
+  <input type="text" size="80" placeholder="Type to change header text"
+         oninput="document.querySelector('acme-accordion').setAttribute('header-text', this.value)">
+
+</body>
+</html>
