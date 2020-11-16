@@ -3,7 +3,7 @@
     <h1>Using &lt;acme-product-card&gt; web component in Vue (2.6)</h1>
     <div class="products">
       <acme-product-card v-for="product in products" :key="product.pid" :pid="product.pid" :price="product.price" :badge="product.badge"
-                         :name="product.name" :desc="product.desc" :image-src="product.imageSrc" @addToCart="addedToCart">
+                         :name="product.name" :desc="product.desc" :image-src="product.imageSrc" v-on:addToCart="addedToCart">
 
       </acme-product-card>
 
