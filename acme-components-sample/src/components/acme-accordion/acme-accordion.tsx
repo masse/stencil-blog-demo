@@ -12,7 +12,7 @@ export class AcmeAccordion {
   render() {
     return (
         <Host>
-          <header class={{'open': this.open}} onClick={() => this.open = !this.open}>{this.headerText}</header>
+          <header class={this.open ? 'open' : ''} onClick={() => this.open = !this.open}>{this.headerText}</header>
           <section>
             <slot></slot>
           </section>

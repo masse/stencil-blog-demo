@@ -7,7 +7,7 @@ const AcmeAccordion = class {
     registerInstance(this, hostRef);
   }
   render() {
-    return (h(Host, null, h("header", { class: { 'open': this.open }, onClick: () => this.open = !this.open }, this.headerText), h("section", null, h("slot", null))));
+    return (h(Host, null, h("header", { class: this.open ? 'open' : '', onClick: () => this.open = !this.open }, this.headerText), h("section", null, h("slot", null))));
   }
 };
 AcmeAccordion.style = acmeAccordionCss;
